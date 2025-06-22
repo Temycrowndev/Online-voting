@@ -1,0 +1,48 @@
+{% extends 'voting/base.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="text-center text-white p-4" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 40px;">
+        <h2 class="text-center mb-4">Welcome, Admin {{ request.user.get_full_name|default:request.user.username }}</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Candidates</h5>
+                        <p class="card-text">Add or edit candidate information.</p>
+                        <a href="/admin/voting/candidate/" class="btn btn-primary w-100">Go to Candidates</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Manage Positions</h5>
+                        <p class="card-text">Define positions for candidates.</p>
+                        <a href="/admin/voting/position/" class="btn btn-success w-100">Go to Positions</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card border-info">
+                    <div class="card-body">
+                        <h5 class="card-title">Voting Results</h5>
+                        <p class="card-text">Check live voting statistics.</p>
+                        <a href="{% url 'results' %}" class="btn btn-info w-100">View Results</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'logout' %}" class="btn btn-outline-danger">Logout</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

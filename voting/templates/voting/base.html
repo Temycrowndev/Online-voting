@@ -1,0 +1,119 @@
+<!-- templates/voting/base.html -->
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Secure and fast Online Voting Platform for transparent elections.">
+
+    <title>{% block title %}Online Voting Platform{% endblock %}</title>
+    <!--  Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'voting/images/favicon3.png' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      body.home-bg {
+        background: url("{% static 'voting/images/home-bg.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+      }
+
+      body.default-bg {
+        background: url("{% static 'voting/images/home-bg.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+      }
+
+      .custom-form-container {
+        max-width: 500px;
+        margin: 50px auto;
+        background-color: rgba(255, 255, 255, 0.85); /* slightly transparent white */
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .custom-form-container .form-label {
+        font-weight: 600;
+      }
+
+      .custom-form-container .btn {
+        font-size: 1rem;
+      }
+    </style>
+
+
+</head>
+<body class="{% block body_class %}default-bg{% endblock %}">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+      <img src="{% static 'voting/images/logo.png' %}" alt="Logo" style="height: 40px; margin-right: 10px;">
+        <strong>Online Voting Platform</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link disabled text-white">Hi, {{ request.user.get_full_name|default:request.user.username }}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger fw-semibold" href="{% url 'logout' %}">Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Register</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="content-wrapper">
+    {% if messages %}
+    <div class="d-flex justify-content-center">
+      <div class="w-100" style="max-width: 600px;">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+    {% block content %}{% endblock %}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous">
+
+</script>
+<script>
+  // Automatically hide messages after 3 seconds
+  setTimeout(function() {
+    let alerts = document.querySelectorAll('.alert');
+    alerts.forEach(function(alert) {
+      let bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+      bsAlert.close();
+    });
+  }, 2000);
+</script>
+
+</body>
+</html>

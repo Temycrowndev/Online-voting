@@ -1,0 +1,17 @@
+{% extends 'voting/base.html' %}
+{% block title %}Candidate Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center text-white p-4" style="background-color: rgba(0, 0, 0, 0.5); border-radius: 10px;">
+        <h2 class="mb-3">Welcome, {{ request.user.get_full_name|default:request.user.username }}</h2>
+        <p class="lead">You are logged in as a <strong>Voter</strong>.</p>
+
+
+        <div class="d-grid gap-3 col-md-6 mx-auto mt-4">
+            <a href="{% url 'results' %}" class="btn btn-success btn-lg">View Voting Results</a>
+            <a href="{% url 'logout' %}" class="btn btn-danger btn-lg">Logout</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'voting/base.html' %}
+{% block title %}Voting Results{% endblock %}
+
+{% block content %}
+<div class="container mt-5 text-white">
+  <h2 class="mb-4">Voting Results</h2>
+
+  {% if results %}
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>Position</th>
+          <th>Candidate</th>
+          <th>Total Votes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in results %}
+          <tr>
+            <td>{{ item.position }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.votes }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="text-muted">No voting data available yet.</p>
+  {% endif %}
+
+  <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+</div>
+{% endblock %}
